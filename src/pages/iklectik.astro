@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro"
+
+let res = await fetch("https://iklectikartlab.com/wp-json/wp/v2/posts?categories=38&per_page=10")
+let posts = await res.json();
+---
+<Layout title="Dinos!">
+  <section>
+    <h1>List of Events</h1>
+    {
+      posts.map((post) => (
+        <article>
+          <h2>
+            <a href={`/posts/${post.slug}/`} set:html={post.title.rendered} />
+          </h2>
+          <Fragment set:html={post.content.rendered} />
+        </article>
+      ))
+    }
+  </section>
+</Layout>
